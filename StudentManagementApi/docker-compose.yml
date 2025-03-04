@@ -1,50 +1,38 @@
-﻿# Define the version of the docker-compose file format
-version: '3.8'
+﻿version: '3.8'
 
 services:
-  # Database service configuration using Microsoft SQL Server 2022
-  db:
-    # Use the official SQL Server image from Microsoft Container Registry
+  # SQL Server database service
+  sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      # Set the SA (system administrator) password for SQL Server
       SA_PASSWORD: "Riwi2025**"
-      # Automatically accept the End User License Agreement (EULA)
       ACCEPT_EULA: "Y"
     ports:
-      # Map port 1433 of the container (default SQL Server port) to port 1433 on the host
       - "1433:1433"
     volumes:
-      # Persist SQL Server data by mounting a named volume
       - sql-data:/var/opt/mssql
     networks:
-      # Connect this service to the "student-network" network
       - student-network
 
-  # Student service configuration
+  # Student Management API service
   studentservice:
-    # Build the studentservice image from the specified context and Dockerfile
     build:
       context: .
       dockerfile: Dockerfile
-    # Use environment variables defined in the .env.production file
     env_file:
       - .env.production
     ports:
-      # Map port 8080 of the container to port 8080 on the host
-      - "8080:8080"
-    # Ensure the studentservice starts only after the db service is up
+      - "8080:80"
+    # Map host port 8080 to container port 80
     depends_on:
-      - db
+      - sqlserver
     networks:
-      # Connect this service to the "student-network" network
       - student-network
+    restart: unless-stopped
 
-# Define custom networks for service communication
 networks:
   student-network:
     driver: bridge
 
-# Define named volumes for persistent data storage
 volumes:
   sql-data:
