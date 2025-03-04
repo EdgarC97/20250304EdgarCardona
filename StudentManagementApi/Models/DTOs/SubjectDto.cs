@@ -9,6 +9,6 @@
         public string Schedule { get; set; } = string.Empty;
         public string Location { get; set; } = string.Empty;
         public string LogDetails { get; set; } = string.Empty; 
-        public int StudentId { get; set; }
+        public string StudentId { get; set; }
     }
 }
