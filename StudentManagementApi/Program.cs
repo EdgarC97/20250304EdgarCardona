@@ -3,6 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using DotNetEnv;
 using StudentManagementApi.Data.Seeders;
+using StudentManagementApi.Repositories;
+using StudentManagementApi.Repositories.Interfaces;
+using StudentManagementApi.Services;
+using StudentManagementApi.Services.Interfaces;
+using StudentManagementApi.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +30,19 @@ builder.Services.AddDbContext<StudentDbContext>(options =>
         sqlServerOptions.EnableRetryOnFailure(
             maxRetryCount: 5,
             maxRetryDelay: TimeSpan.FromSeconds(10),
-            errorNumbersToAdd: null); // Especifica null para el parámetro opcional
+            errorNumbersToAdd: null);
     }));
+
+// Registrar repositorios
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+
+// Registrar servicios
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
+
+// Registrar AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Configurar Swagger
 builder.Services.AddSwaggerGen(c =>

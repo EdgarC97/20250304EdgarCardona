@@ -7,6 +7,6 @@ namespace StudentManagementApi.Repositories.Interfaces
         Task<Student> GetByIdAsync(int id);
         Task<Student> AddAsync(Student student);
         Task<Student> UpdateAsync(Student student);
-        Task<IEnumerable<Student>> GetAllAsync();
+        Task<IQueryable<Student>> GetAllAsync(); 
     }
 }

@@ -4,6 +4,7 @@ using StudentManagementApi.Models.DTOs;
 using StudentManagementApi.Services.Interfaces;
 using StudentManagementApi.Repositories.Interfaces;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore; // Asegúrate de incluir este using
 
 namespace StudentManagementApi.Services
 {
@@ -22,8 +23,8 @@ namespace StudentManagementApi.Services
 
         public async Task<IEnumerable<SubjectDto>> GetSubjectsByStudentCodeAsync(string studentCode)
         {
-            var student = await _studentRepository.GetAllAsync()
-                .FirstOrDefaultAsync(s => s.Code == studentCode);
+            var students = await _studentRepository.GetAllAsync(); // Resuelve el Task<IQueryable<Student>>
+            var student = await students.FirstOrDefaultAsync(s => s.Code == studentCode); // Usa FirstOrDefaultAsync en IQueryable
             if (student == null)
                 throw new KeyNotFoundException("Student not found.");
 
@@ -31,7 +32,7 @@ namespace StudentManagementApi.Services
             return _mapper.Map<IEnumerable<SubjectDto>>(subjects);
         }
 
-        public async Task<SubjectDto> AddSubjectAsync(CreateSubjectRequest request, int studentId)
+        public async Task<SubjectDto> AddSubjectAsync(StudentManagementApi.Models.Requests.CreateSubjectRequest request, int studentId)
         {
             var subject = _mapper.Map<Subject>(request);
             subject.StudentId = studentId;

@@ -38,9 +38,9 @@ namespace StudentManagementApi.Repositories
             return existingStudent;
         }
 
-        public async Task<IEnumerable<Student>> GetAllAsync()
+        public Task<IQueryable<Student>> GetAllAsync()
         {
-            return await _context.Students.ToListAsync();
+            return Task.FromResult(_context.Students.AsQueryable());
         }
     }
 }
