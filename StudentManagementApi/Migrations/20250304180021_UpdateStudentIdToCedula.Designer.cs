@@ -12,8 +12,8 @@ using StudentManagementApi.Data;
 namespace StudentManagementApi.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    [Migration("20250304164302_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250304180021_UpdateStudentIdToCedula")]
+    partial class UpdateStudentIdToCedula
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,10 @@ namespace StudentManagementApi.Migrations
 
             modelBuilder.Entity("StudentManagementApi.Models.Student", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasMaxLength(10)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -124,8 +123,11 @@ namespace StudentManagementApi.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 

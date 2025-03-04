@@ -8,6 +8,11 @@ using StudentManagementApi.Repositories.Interfaces;
 using StudentManagementApi.Services;
 using StudentManagementApi.Services.Interfaces;
 using StudentManagementApi.Mappers;
+using System.Reflection;
+
+// Habilitar generación de comentarios XML
+var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,10 +49,12 @@ builder.Services.AddScoped<ISubjectService, SubjectService>();
 // Registrar AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-// Configurar Swagger
+// Configurar Swagger con Annotations
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Student Management API", Version = "v1" });
+    c.EnableAnnotations(); // Habilitar Annotations para Swagger
+    c.IncludeXmlComments(xmlPath); // Incluir comentarios XML
 });
 
 var app = builder.Build();

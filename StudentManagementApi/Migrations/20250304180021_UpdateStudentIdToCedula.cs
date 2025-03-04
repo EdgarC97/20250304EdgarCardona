@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StudentManagementApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class UpdateStudentIdToCedula : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,7 @@ namespace StudentManagementApi.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Names = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Lastnames = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -42,7 +41,7 @@ namespace StudentManagementApi.Migrations
                     Schedule = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Location = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LogDetails = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
+                    StudentId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {

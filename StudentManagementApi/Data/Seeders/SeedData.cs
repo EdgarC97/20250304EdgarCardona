@@ -1,19 +1,28 @@
-﻿using StudentManagementApi.Models;
+﻿using StudentManagementApi.Data;
+using StudentManagementApi.Models;
 
+/// <summary>
+/// Static class to seed initial data into the database.
+/// </summary>
 namespace StudentManagementApi.Data.Seeders
 {
     public static class SeedData
     {
+        /// <summary>
+        /// Initializes the database with sample student and subject data if no students exist.
+        /// </summary>
+        /// <param name="context">The database context to seed data into.</param>
         public static void Initialize(StudentDbContext context)
         {
             if (context.Students.Any())
-                return; 
+                return; // Avoid duplicates
 
-            // Seed 5 students
+            // Seed 5 students with cedulas as IDs
             var students = new List<Student>
             {
                 new Student
                 {
+                    Id = "123456789", // Ejemplo de cédula
                     Code = "STU001",
                     Names = "Juan",
                     Lastnames = "Pérez",
@@ -24,6 +33,7 @@ namespace StudentManagementApi.Data.Seeders
                 },
                 new Student
                 {
+                    Id = "987654321", // Ejemplo de cédula
                     Code = "STU002",
                     Names = "María",
                     Lastnames = "Gómez",
@@ -34,6 +44,7 @@ namespace StudentManagementApi.Data.Seeders
                 },
                 new Student
                 {
+                    Id = "456789123", // Ejemplo de cédula
                     Code = "STU003",
                     Names = "Pedro",
                     Lastnames = "López",
@@ -44,6 +55,7 @@ namespace StudentManagementApi.Data.Seeders
                 },
                 new Student
                 {
+                    Id = "789123456", // Ejemplo de cédula
                     Code = "STU004",
                     Names = "Ana",
                     Lastnames = "Rodríguez",
@@ -54,6 +66,7 @@ namespace StudentManagementApi.Data.Seeders
                 },
                 new Student
                 {
+                    Id = "321654987", // Ejemplo de cédula
                     Code = "STU005",
                     Names = "Carlos",
                     Lastnames = "Sánchez",
@@ -67,58 +80,58 @@ namespace StudentManagementApi.Data.Seeders
             context.Students.AddRange(students);
             context.SaveChanges();
 
-            // Seed 5 subjects asociadas al primer estudiante (STU001)
+            // Seed 5 subjects associated with the first student (cedula "123456789")
             var subjects = new List<Subject>
             {
                 new Subject
                 {
                     Code = "MAT001",
-                    Name = "Matemáticas",
+                    Name = "Mathematics",
                     Instructor = "Prof. López",
-                    Schedule = "Lunes 10:00",
-                    Location = "Aula 101",
+                    Schedule = "Monday 10:00",
+                    Location = "Room 101",
                     LogDetails = "Seeded on " + DateTime.Now,
-                    StudentId = students[0].Id
+                    StudentId = "123456789" // Usa la cédula como StudentId
                 },
                 new Subject
                 {
-                    Code = "FIS001",
-                    Name = "Física",
+                    Code = "PHY001",
+                    Name = "Physics",
                     Instructor = "Prof. Gómez",
-                    Schedule = "Martes 14:00",
-                    Location = "Aula 102",
+                    Schedule = "Tuesday 14:00",
+                    Location = "Room 102",
                     LogDetails = "Seeded on " + DateTime.Now,
-                    StudentId = students[0].Id
+                    StudentId = "123456789"
                 },
                 new Subject
                 {
-                    Code = "QUI001",
-                    Name = "Química",
+                    Code = "CHE001",
+                    Name = "Chemistry",
                     Instructor = "Prof. Pérez",
-                    Schedule = "Miércoles 9:00",
-                    Location = "Aula 103",
+                    Schedule = "Wednesday 9:00",
+                    Location = "Room 103",
                     LogDetails = "Seeded on " + DateTime.Now,
-                    StudentId = students[0].Id
+                    StudentId = "123456789"
                 },
                 new Subject
                 {
                     Code = "BIO001",
-                    Name = "Biología",
+                    Name = "Biology",
                     Instructor = "Prof. Rodríguez",
-                    Schedule = "Jueves 16:00",
-                    Location = "Aula 104",
+                    Schedule = "Thursday 16:00",
+                    Location = "Room 104",
                     LogDetails = "Seeded on " + DateTime.Now,
-                    StudentId = students[0].Id
+                    StudentId = "123456789"
                 },
                 new Subject
                 {
                     Code = "INF001",
-                    Name = "Informática",
+                    Name = "Computer Science",
                     Instructor = "Prof. Sánchez",
-                    Schedule = "Viernes 11:00",
-                    Location = "Aula 105",
+                    Schedule = "Friday 11:00",
+                    Location = "Room 105",
                     LogDetails = "Seeded on " + DateTime.Now,
-                    StudentId = students[0].Id
+                    StudentId = "123456789"
                 }
             };
 
